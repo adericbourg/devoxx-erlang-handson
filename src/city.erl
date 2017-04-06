@@ -3,6 +3,7 @@
 
 %% API
 -export([new/1, name_of/1, infects/2, infection_level/2]).
+-define(OUTBREAK_THRESHOLD, 3).
 
 new(CityName) ->
   {ok, {CityName, #{}}}.
@@ -16,7 +17,7 @@ infects(City, Disease) ->
   UpdatedLevel = DiseaseLevel + 1,
   infection_result(City, Disease, UpdatedLevel).
 
-infection_result(_, _, Level) when Level > 3 -> outbreak;
+infection_result(_, _, Level) when Level > ?OUTBREAK_THRESHOLD -> outbreak;
 infection_result(City, Disease, Level) ->
   {CityName, Levels} = City,
   {infected, {CityName, Levels#{Disease => Level}}}.
