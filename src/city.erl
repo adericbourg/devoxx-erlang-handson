@@ -3,7 +3,6 @@
 
 %% API
 -export([new/1, name_of/1, infects/2, infection_level/2]).
--include_lib("eunit/include/eunit.hrl").
 
 new(CityName) ->
   {ok, {CityName, #{}}}.
@@ -20,8 +19,8 @@ infects(City, Disease) ->
 infection_result(_, _, Level) when Level > 3 -> outbreak;
 infection_result(City, Disease, Level) ->
   {CityName, Levels} = City,
-  {infected, {CityName, Levels#{Disease => Level}}}
-.
+  {infected, {CityName, Levels#{Disease => Level}}}.
+
 infection_level(City, Disease) ->
   {_, Levels} = City,
   maps:get(Disease, Levels, 0).
