@@ -5,7 +5,11 @@
 -export([add/1, add/2, divide/2]).
 
 add([]) -> 0;
-add([Head | Tail]) -> Head + add(Tail).
+add([Head | Tail]) -> add0([Head | Tail], 0).
+
+% Tail recursion
+add0([], Acc) -> Acc;
+add0([Head | Tail], Acc) -> add0(Tail, Head + Acc).
 
 add({Xa, Ya}, {Xb, Yb}) -> {Xa + Ya, Xb + Yb};
 add(A, B) -> A + B.
