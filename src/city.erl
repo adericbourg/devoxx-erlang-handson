@@ -14,13 +14,14 @@ name_of(City) ->
 
 infects(City, Disease) ->
   DiseaseLevel = infection_level(City, Disease),
-  UpdatedLevel = DiseaseLevel + 1,
-  infection_result(City, Disease, UpdatedLevel).
-
-infection_result(_, _, Level) when Level > ?OUTBREAK_THRESHOLD -> outbreak;
-infection_result(City, Disease, Level) ->
-  {CityName, Levels} = City,
-  {infected, {CityName, Levels#{Disease => Level}}}.
+  case DiseaseLevel of
+    ?OUTBREAK_THRESHOLD ->
+      outbreak;
+    _ ->
+      UpdatedLevel = DiseaseLevel + 1,
+      {CityName, Levels} = City,
+      {infected, {CityName, Levels#{Disease => UpdatedLevel}}}
+  end.
 
 infection_level(City, Disease) ->
   {_, Levels} = City,
